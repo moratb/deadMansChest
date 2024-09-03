@@ -6,12 +6,12 @@ struct Chest:
     openTimestamp: uint256
     chestMessage: String[512]
 
-chestsCount: uint256
+chestCount: uint256
 idToChest: HashMap[uint256, Chest]
 
 @deploy
 def __init__() -> bool:
-    chestsCount = 0
+    self.chestCount = 0
     return True
 
 @external
@@ -21,12 +21,12 @@ def getChestDetails(_chestId: uint256) -> (address, DynArray[address, 3], uint25
 
 @external
 def createChest(_beneficiaries: DynArray[address, 3], _openTimestamp: uint256, _chestMessage: String[512]) -> uint256:
-    chestId = chestsCount
-    self.idToChest[chestsCount].owner = msg.sender
-    self.idToChest[chestsCount].beneficiaries = _beneficiaries
-    self.idToChest[chestsCount].openTimestamp = _openTimestamp
-    self.idToChest[chestsCount].chestMessage = _chestMessage
-    chestsCount += 1
+    chestId = self.chestCount
+    self.idToChest[chestId].owner = msg.sender
+    self.idToChest[chestId].beneficiaries = _beneficiaries
+    self.idToChest[chestId].openTimestamp = _openTimestamp
+    self.idToChest[chestId].chestMessage = _chestMessage
+    self.chestCount += 1
     return chestId
 
 @external
